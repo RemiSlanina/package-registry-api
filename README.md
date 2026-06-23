@@ -52,7 +52,7 @@ data/
 ## Roadmap
 
 - [x] GET /packages
-- [ ] GET /packages/{id}
+- [x] GET /packages/{id}
 - [ ] POST /packages
 - [ ] PUT /packages/{id}
 - [ ] DELETE /packages/{id}

@@ -14,5 +14,8 @@
             "email": "remislanina@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "php": "^8.3",
+        "ext-pdo": "*"
+    }
 }

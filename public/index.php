@@ -6,19 +6,55 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use App\PackageController;
 use App\PackageRepository;
-use PDO;
+use App\Package;
 
 $pdo = new PDO('sqlite:' . __DIR__ . '/../data/packages.db');
 
+$package = new Package(
+    null,
+    name:	"Composer",
+    description:	"Dependency manager",
+    programmingLanguage:	"PHP",
+    repositoryUrl:	"https://github.com/composer/composer",
+    license:	"MIT"
+);
+$package2 = new Package(
+    null,
+    name: "Symfony",
+    description: "PHP framework",
+    programmingLanguage:	"PHP",
+    repositoryUrl:	"https://github.com/symfony/symfony",
+    license: "MIT"
+);
+$package3 = new Package(
+    null,
+    name: "Test Package",
+    description: "PHP Test",
+    programmingLanguage:	"PHP",
+    repositoryUrl:	"https://test.com",
+    license: "MIT"
+);
+#$package_controller = new PackageController(new PackageRepository($pdo));
 $repository = new PackageRepository($pdo);
+try {
+    $controller = new PackageController($repository);
+    //$controller->deletePackage(3);
+    //$controller->createPackage($package2);
+    $allPackages = $controller->listPackages();
+    $onePackage = $controller->getPackage(2);
 
-$packages = $repository->findAll();
+    header('Content-Type: application/json');
 
-header('Content-Type: application/json');
+    echo json_encode($allPackages);
 
-echo json_encode($packages);
-
+} catch (RuntimeException $e) {
+    http_response_code(500);
+    echo json_encode([
+        "error" => $e->getMessage()
+    ]);
+}
 /*$stmt = $pdo->query("SELECT * FROM packages");
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 echo json_encode($rows);*/
