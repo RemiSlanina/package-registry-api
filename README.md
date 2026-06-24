@@ -1,6 +1,4 @@
-# Package Registry API 
-
-> work in progress 
+# Package Registry API
 
 A small REST API written in PHP for managing software package metadata.
 
@@ -9,8 +7,19 @@ A small REST API written in PHP for managing software package metadata.
 - REST API
 - PHP 8
 - SQLite database
+- Router
+- Controller layer
 - Repository pattern
-- Controller layer (wip)
+
+## HTTP status codes
+
+```text
+GET    /packages      -> 200 OK
+GET    /packages/{id} -> 200 OK
+POST   /packages      -> 201 Created
+PUT    /packages/{id} -> 200 OK
+DELETE /packages/{id} -> 204 No Content
+```
 
 ## Running locally
 
@@ -34,6 +43,8 @@ http://localhost:8000/packages
 ```
 or
 
+http://localhost:8000/packages/15
+
 ### Use curl 
 
 Read: 
@@ -51,7 +62,6 @@ Delete:
 ```
 curl -X DELETE http://localhost:8000/packages/9
 ```
-
 
 Create:
 
@@ -76,7 +86,6 @@ curl \
   -X PUT \
   -H "Content-Type: application/json" \
   -d '{
-    "id":15,
     "name":"Composer Updated",
     "description":"Dependency manager",
     "programmingLanguage":"PHP",
@@ -86,23 +95,34 @@ curl \
   http://localhost:8000/packages/15
 ```
 
-
-
 ## Project structure
 
 ```
 public/
-    index.php
+    index.php                # Application entry point
 
-src/
-    Package.php
-    PackageController.php
-    PackageRepository.php
+src/                         # Core logic
+    Package.php              # Model
+    Router.php               # Routing logic  
+    PackageController.php    # Handles HTTP requests
+    PackageRepository.php    # Database operations
 
-data/
+data/                        # SQLite database
     packages.db
 ```
+## Architecture 
 
+```
+HTTP Request
+↓
+Router
+↓
+Controller
+↓
+Repository
+↓
+SQLite
+```
 
 ## Roadmap
 
@@ -112,21 +132,30 @@ data/
 - [x] PUT /packages/{id}
 - [x] DELETE /packages/{id}
 - [ ] Validation
-- [ ] Tests 
+- [ ] PHPUnit tests  
+- [ ] Small Frontend
 
 ## Example
 
 Example response:
 
+
+### GET /packages
+
 ```json
 [
   {
     "id": 1,
-    "name": "Composer",
-    "description": "Dependency manager",
-    "programming_language": "PHP",
-    "repository_url": "https://...",
-    "license": "MIT"
+    ...
   }
 ]
+````
+
+### GET /packages/1
+
+```json
+{
+  "id": 1,
+  ...
+}
 ```
