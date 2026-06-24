@@ -19,14 +19,7 @@ class PackageRepository {
 
         $packages = [];
         foreach ($rows as $row) {
-            $package = new Package(
-                $row['id'],
-                $row['name'],
-                $row['description'],
-                $row['programming_language'],
-                $row['repository_url'],
-                $row['license']
-            );
+            $package = $this->mapRowToPackage($row);
             $packages[] = $package;
         }
 
@@ -40,14 +33,7 @@ class PackageRepository {
         if (!$row) {
             return null;
         }
-        return new Package(
-            $row['id'],
-            $row['name'],
-            $row['description'],
-            $row['programming_language'],
-            $row['repository_url'],
-            $row['license']
-        );
+        return $this->mapRowToPackage($row);
     }
 
     public function deletePackage(int $id): bool {
@@ -131,6 +117,18 @@ class PackageRepository {
 //            throw new RuntimeException('Failed to update package.');
 //        }
         return $package;
+    }
+
+//    *************** HELPER FUNCTIONS ***************
+    private function mapRowToPackage(array $row): Package {
+        return new Package(
+            $row['id'],
+            $row['name'],
+            $row['description'],
+            $row['programming_language'],
+            $row['repository_url'],
+            $row['license']
+        );
     }
 }
 

@@ -12,6 +12,13 @@ use App\Package;
 
 $pdo = new PDO('sqlite:' . __DIR__ . '/../data/packages.db');
 
+$method = $_SERVER['REQUEST_METHOD'];
+
+$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+//var_dump($path);
+//var_dump($method);
+
 $package = new Package(
     null,
     name:	"Composer",
@@ -49,15 +56,29 @@ $packageToUpdate = new Package(
 $repository = new PackageRepository($pdo);
 try {
     $controller = new PackageController($repository);
+
+    IF ($path === '/packages') {
+        echo json_encode($controller->listPackages());
+    }
+    elseif (preg_match(
+        '#^/packages/(\d+)$#',
+        $path,
+        $matches
+    )) {
+        // $matches[0] = '/packages/11';
+        //$matches[1] = '11';
+        $id = (int)$matches[1];
+        echo json_encode($controller->getPackage($id));
+    }
+
     //$controller->deletePackage(3);
     //$controller->createPackage($package2);
-    $updatedPackage = $controller->updatePackage($packageToUpdate);
-    $allPackages = $controller->listPackages();
-    $onePackage = $controller->getPackage(2);
-
-    header('Content-Type: application/json');
-
-    echo json_encode($allPackages);
+//    $updatedPackage = $controller->updatePackage($packageToUpdate);
+//    $allPackages = $controller->listPackages();
+//    $onePackage = $controller->getPackage(2);
+//
+//    header('Content-Type: application/json');
+//    echo json_encode($allPackages);
 
 } catch (RuntimeException $e) {
     http_response_code(500);
