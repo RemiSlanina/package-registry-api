@@ -17,7 +17,20 @@ class PackageRepository {
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         # echo json_encode($rows);
 
-        return $rows;
+        $packages = [];
+        foreach ($rows as $row) {
+            $package = new Package(
+                $row['id'],
+                $row['name'],
+                $row['description'],
+                $row['programming_language'],
+                $row['repository_url'],
+                $row['license']
+            );
+            $packages[] = $package;
+        }
+
+        return $packages;
     }
 
     public function findById(int $id): ?Package {
@@ -43,6 +56,9 @@ class PackageRepository {
         return $stmt->rowCount() > 0;
     }
 
+    /**
+     * @throws RuntimeException
+     */
     public function createPackage(Package $package): Package {
         $sql =  "
             INSERT INTO packages (
