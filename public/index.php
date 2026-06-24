@@ -19,66 +19,70 @@ $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 //var_dump($path);
 //var_dump($method);
 
-$package = new Package(
-    null,
-    name:	"Composer",
-    description:	"Dependency manager",
-    programmingLanguage:	"PHP",
-    repositoryUrl:	"https://github.com/composer/composer",
-    license:	"MIT"
-);
-$package2 = new Package(
-    null,
-    name: "Symfony",
-    description: "PHP framework",
-    programmingLanguage:	"PHP",
-    repositoryUrl:	"https://github.com/symfony/symfony",
-    license: "MIT"
-);
-$package3 = new Package(
-    null,
-    name: "Test Package",
-    description: "PHP Test",
-    programmingLanguage:	"PHP",
-    repositoryUrl:	"https://test.com",
-    license: "MIT"
-);
-
-$packageToUpdate = new Package(
-    4,
-    name: "Test Presets",
-    description: "Test",
-    programmingLanguage:	"C++, JavaScript, HTML, C, Rust, and others",
-    repositoryUrl:	"https://test.com",
-    license: "MIT"
-);
-#$package_controller = new PackageController(new PackageRepository($pdo));
 $repository = new PackageRepository($pdo);
 try {
     $controller = new PackageController($repository);
 
-    IF ($path === '/packages') {
-        echo json_encode($controller->listPackages());
-    }
-    elseif (preg_match(
-        '#^/packages/(\d+)$#',
-        $path,
-        $matches
-    )) {
-        // $matches[0] = '/packages/11';
-        //$matches[1] = '11';
-        $id = (int)$matches[1];
-        echo json_encode($controller->getPackage($id));
+    switch (true) {
+        case $method === "GET" && $path === "/packages":
+            echo json_encode($controller->listPackages());
+            break;
+        case $method === "GET" && (preg_match(
+                '#^/packages/(\d+)$#', $path, $matches
+            )):
+            // $matches[0] = '/packages/11';
+            //$matches[1] = '11';
+            $id = $matches[1];
+//            var_dump($matches);
+//            die("reached get id method");
+            echo json_encode($controller->getPackage($id));
+            break;
+        case $method === "DELETE" && (preg_match(
+                '#^/packages/(\d+)$#', $path, $matches
+            )):
+            $id = $matches[1];
+            $result = $controller->deletePackage($id);
+            http_response_code(204);
+            echo json_encode($controller->listPackages());
+            break;
+        case $method === "POST" && $path === "/packages":
+            $body = file_get_contents('php://input');
+            $data = json_decode($body, true);
+            $package = new Package(
+                null,
+                $data['name'],
+                $data['description'],
+                $data['programmingLanguage'],
+                $data['repositoryUrl'],
+                $data['license']
+            );
+            http_response_code(201);
+            echo json_encode($controller->createPackage($package));;
+            break;
+        case $method === "PUT"  && (preg_match(
+                '#^/packages/(\d+)$#', $path, $matches
+            )):
+            $body = file_get_contents('php://input');
+            $data = json_decode($body, true);
+            $id = $matches[1]; //use PUT params as source of truth
+            $package = new Package(
+                $id,
+                $data['name'],
+                $data['description'],
+                $data['programmingLanguage'],
+                $data['repositoryUrl'],
+                $data['license']
+            );
+            $id = $matches[1];
+            $result = $controller->updatePackage($package);
+            echo json_encode($controller->listPackages());
+            break;
+        default:
+            http_response_code(404);
+            echo json_encode(["error" => "Route not found."]);
+            break;
     }
 
-    //$controller->deletePackage(3);
-    //$controller->createPackage($package2);
-//    $updatedPackage = $controller->updatePackage($packageToUpdate);
-//    $allPackages = $controller->listPackages();
-//    $onePackage = $controller->getPackage(2);
-//
-//    header('Content-Type: application/json');
-//    echo json_encode($allPackages);
 
 } catch (RuntimeException $e) {
     http_response_code(500);
@@ -86,41 +90,3 @@ try {
         "error" => $e->getMessage()
     ]);
 }
-/*$stmt = $pdo->query("SELECT * FROM packages");
-$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-echo json_encode($rows);*/
-
-/*
-
-echo "\n";
-echo "\n";echo "\n";echo "\n";
-
-header('Content-Type: application/json');
-
-echo json_encode([
-    'message' => 'Hello API'
-]);
-
-echo $_SERVER['REQUEST_METHOD'];
-
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    print "path: {$path}";
-    print $path;
-}
-
-
-$packages = [
-    [
-        "id" => 1,
-        "name" => "Newspaper Application",
-    ],
-        [
-            "id" => 2,
-            "name" => "symfony",
-        ]
-];
-
-print json_encode($packages);
-// or
-echo json_encode($packages);*/
