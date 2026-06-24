@@ -99,5 +99,38 @@ class PackageRepository {
             $package->license
         );
     }
+
+    /**
+     * @throws RuntimeException
+     */
+    public function updatePackage(Package $package): Package {
+        if ($package->id === null) {
+            throw new RuntimeException('The package id must not be null for updating.');
+        }
+        $sql =  "UPDATE packages 
+                    SET name = :name,
+                        description = :description,
+                        programming_language  = :programming_language,
+                        repository_url = :repository_url,
+                        license = :license 
+                    WHERE id = :id";
+        $data = [
+            'name' => $package->name,
+            'description' => $package->description,
+            'programming_language' => $package->programmingLanguage,
+            'repository_url' => $package->repositoryUrl,
+            'license' => $package->license,
+            'id' => $package->id
+        ];
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($data);
+//         Better not.
+//         Some databases report: "0 rows affected"
+//         when the data was already identical.
+//        if ($stmt->rowCount() <= 0) {
+//            throw new RuntimeException('Failed to update package.');
+//        }
+        return $package;
+    }
 }
 

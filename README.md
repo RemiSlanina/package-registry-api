@@ -53,9 +53,9 @@ data/
 
 - [x] GET /packages
 - [x] GET /packages/{id}
-- [ ] POST /packages
-- [ ] PUT /packages/{id}
-- [ ] DELETE /packages/{id}
+- [x] POST /packages
+- [x] PUT /packages/{id}
+- [x] DELETE /packages/{id}
 - [ ] Validation
 - [ ] Tests 
 

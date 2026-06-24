@@ -36,12 +36,22 @@ $package3 = new Package(
     repositoryUrl:	"https://test.com",
     license: "MIT"
 );
+
+$packageToUpdate = new Package(
+    4,
+    name: "Test Presets",
+    description: "Test",
+    programmingLanguage:	"C++, JavaScript, HTML, C, Rust, and others",
+    repositoryUrl:	"https://test.com",
+    license: "MIT"
+);
 #$package_controller = new PackageController(new PackageRepository($pdo));
 $repository = new PackageRepository($pdo);
 try {
     $controller = new PackageController($repository);
     //$controller->deletePackage(3);
     //$controller->createPackage($package2);
+    $updatedPackage = $controller->updatePackage($packageToUpdate);
     $allPackages = $controller->listPackages();
     $onePackage = $controller->getPackage(2);
 

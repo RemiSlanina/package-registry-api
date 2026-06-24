@@ -25,4 +25,10 @@ class PackageController {
     public function createPackage(Package $package): Package {
         return $this->repository->createPackage($package);
     }
+    /**
+     * @throws RuntimeException
+     */
+    public function updatePackage(Package $package): Package {
+        return $this->repository->updatePackage($package);
+    }
 }
