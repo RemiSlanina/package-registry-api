@@ -26,11 +26,66 @@ Start the development server
 php -S localhost:8000 -t public
 ```
 
+### Use Browser
 Open
 
 ```
 http://localhost:8000/packages
 ```
+or
+
+### Use curl 
+
+Read: 
+
+```
+curl http://localhost:8000/packages
+```
+or 
+```
+curl http://localhost:8000/packages/15
+```
+
+Delete: 
+
+```
+curl -X DELETE http://localhost:8000/packages/9
+```
+
+
+Create:
+
+```bash
+curl \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name":"Composer",
+    "description":"Dependency manager",
+    "programmingLanguage":"PHP",
+    "repositoryUrl":"https://github.com/composer/composer",
+    "license":"MIT"
+  }' \
+  http://localhost:8000/packages
+```
+
+Update:
+
+```bash
+curl \
+  -X PUT \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id":15,
+    "name":"Composer Updated",
+    "description":"Dependency manager",
+    "programmingLanguage":"PHP",
+    "repositoryUrl":"https://github.com/composer/composer",
+    "license":"MIT"
+  }' \
+  http://localhost:8000/packages/15
+```
+
 
 
 ## Project structure
