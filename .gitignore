@@ -4,3 +4,6 @@
 # dev notes
 dev-notes/
 
+# cache
+.phpunit.cache/
+

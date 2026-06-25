@@ -9,7 +9,38 @@ A small REST API written in PHP for managing software package metadata.
 - SQLite database
 - Router
 - Controller layer
-- Repository pattern
+- Repository pattern 
+
+## Tests 
+
+Using phpunit 
+
+```bash
+composer require --dev phpunit/phpunit
+```
+
+Initialize it with: 
+```bash
+vendor/bin/phpunit --generate-configuration
+``` 
+to create phpunit.xml. 
+
+Run tests with: 
+```bash
+vendor/bin/phpunit
+```
+or 
+```bash
+vendor/bin/phpunit tests
+```
+To run one file:
+```bash
+vendor/bin/phpunit tests/PackageRepositoryTest.php
+```
+To run one test method:
+```bash
+vendor/bin/phpunit --filter testCreatePackageAssignId
+```
 
 ## HTTP status codes
 
