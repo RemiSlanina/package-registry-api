@@ -21,6 +21,13 @@ PUT    /packages/{id} -> 200 OK
 DELETE /packages/{id} -> 204 No Content
 ```
 
+## TODO
+
+- Return Response objects instead of echoing in Router
+- Better exception hierarchy
+- Router could be table-driven
+- Add OpenAPI/Swagger
+
 ## Running locally
 
 Install dependencies
@@ -93,6 +100,32 @@ curl \
     "license":"MIT"
   }' \
   http://localhost:8000/packages/15
+```
+
+Curl notes: 
+
+```bash
+curl -i # ... Show the HTTP response headers.
+
+curl -v # ... Verbose. 
+
+curl -X # ... Manually choose the HTTP method, instead of defaulting to GET. 
+
+curl -H # ... Add an HTTP header. like curl \ -H "Content-Type: application/json" ("I'm sending JSON")
+
+curl -d # ... The request body ("data") for input. 
+# i.e.
+curl \
+    -X POST \
+    -H "Content-Type: application/json" \
+    -d '{
+        "name":"Composer",
+        "description":"Dependency manager",
+        "programmingLanguage":"PHP",
+        "repositoryUrl":"https://github.com/composer/composer",
+        "license":"MIT"
+    }' \
+    http://localhost:8000/packages
 ```
 
 ## Project structure
