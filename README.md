@@ -2,7 +2,7 @@
 
 A small REST API written in PHP for managing software package metadata.
 
-## Features
+## Technologies
 
 - REST API
 - PHP 8
@@ -11,36 +11,9 @@ A small REST API written in PHP for managing software package metadata.
 - Controller layer
 - Repository pattern 
 
-## Tests 
+## Why this project?
 
-Using phpunit 
-
-```bash
-composer require --dev phpunit/phpunit
-```
-
-Initialize it with: 
-```bash
-vendor/bin/phpunit --generate-configuration
-``` 
-to create phpunit.xml. 
-
-Run tests with: 
-```bash
-vendor/bin/phpunit
-```
-or 
-```bash
-vendor/bin/phpunit tests
-```
-To run one file:
-```bash
-vendor/bin/phpunit tests/PackageRepositoryTest.php
-```
-To run one test method:
-```bash
-vendor/bin/phpunit --filter testCreatePackageAssignId
-```
+This project was built as a learning exercise to practice object-oriented PHP, HTTP request handling, repository-based architecture, SQLite, and automated testing.
 
 ## HTTP status codes
 
@@ -50,6 +23,20 @@ GET    /packages/{id} -> 200 OK
 POST   /packages      -> 201 Created
 PUT    /packages/{id} -> 200 OK
 DELETE /packages/{id} -> 204 No Content
+```
+
+## Architecture
+
+```
+HTTP Request
+↓
+Router
+↓
+Controller
+↓
+Repository
+↓
+SQLite
 ```
 
 ## TODO
@@ -159,6 +146,39 @@ curl \
     http://localhost:8000/packages
 ```
 
+
+## Tests
+
+Using phpunit
+
+```bash
+composer require --dev phpunit/phpunit
+```
+
+Initialize it with:
+```bash
+vendor/bin/phpunit --generate-configuration
+``` 
+to create phpunit.xml.
+
+Run tests with:
+```bash
+vendor/bin/phpunit
+```
+or
+```bash
+vendor/bin/phpunit tests
+```
+To run one file:
+```bash
+vendor/bin/phpunit tests/PackageRepositoryTest.php
+```
+To run one test method:
+```bash
+vendor/bin/phpunit --filter testCreatePackageAssignId
+```
+
+
 ## Project structure
 
 ```
@@ -173,19 +193,6 @@ src/                         # Core logic
 
 data/                        # SQLite database
     packages.db
-```
-## Architecture 
-
-```
-HTTP Request
-↓
-Router
-↓
-Controller
-↓
-Repository
-↓
-SQLite
 ```
 
 ## Roadmap
