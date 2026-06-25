@@ -93,6 +93,40 @@ class PackageRepositoryTest extends TestCase {
         $this->repository->updatePackage($package);
     }
 
+    public function testUpdatePackageChangesValue(): void {
+
+        $packages = $this->createTestPackages();
+        $created = $this->repository->createPackage($packages[0]);
+        $updated = $this->repository->updatePackage(new Package(
+            id: $created->id,
+            name: $packages[1]->name,
+            description: $packages[1]->description,
+            programmingLanguage: $packages[1]->programmingLanguage,
+            repositoryUrl: $packages[1]->repositoryUrl,
+            license: $packages[1]->license
+        ));
+        $this->assertNotNull($updated);
+        $this->assertSame($created->id, $updated->id);
+        $this->assertSame($packages[1]->name, $updated->name);
+        $found = $this->repository->findById($created->id);
+        $this->assertSame("Symfony", $found->name);
+    }
+
+    public function testDeletePackageReturnsTrueWhenDeleted(): void
+    {
+        $package = $this->createTestPackage();
+        $created = $this->repository->createPackage($package);
+        $isDeleted = $this->repository->deletePackage($created->id);
+        $this->assertTrue($isDeleted);
+    }
+
+    public function testDeletePackageReturnsFalseWhenMissing(): void {
+        $package = $this->createTestPackage();
+        $created = $this->repository->createPackage($package);
+        $isDeleted = $this->repository->deletePackage($created->id-1);
+        $this->assertFalse($isDeleted);
+    }
+
 //    *************** HELPER FUNCTIONS ***************
     private function createSchema(PDO $pdo): void {
         $pdo->exec(
