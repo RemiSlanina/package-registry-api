@@ -202,8 +202,8 @@ data/                        # SQLite database
 - [x] POST /packages
 - [x] PUT /packages/{id}
 - [x] DELETE /packages/{id}
+- [x] PHPUnit tests
 - [ ] Validation
-- [ ] PHPUnit tests  
 - [ ] Small Frontend
 
 ## Example
