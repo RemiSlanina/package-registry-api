@@ -36,10 +36,17 @@ class PackageRepository {
         return $this->mapRowToPackage($row);
     }
 
-    public function deletePackage(int $id): bool {
+    public function deletePackage(int $id): ?Package {
+        $found = $this->findById($id);
+        if ($found === null) {
+            return null;
+        }
         $stmt = $this->pdo->prepare("DELETE FROM packages WHERE id = :id");
         $stmt->execute(['id' => $id]);
-        return $stmt->rowCount() > 0;
+        if ($stmt->rowCount() == 0) {
+            return null;
+        }
+        return $found;
     }
 
     /**

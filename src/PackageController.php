@@ -15,7 +15,7 @@ class PackageController {
         return $this->repository->findById($id);
     }
 
-    public function deletePackage(int $id): bool {
+    public function deletePackage(int $id): ?Package {
         return $this->repository->deletePackage($id);
     }
 

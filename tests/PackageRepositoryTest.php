@@ -112,19 +112,20 @@ class PackageRepositoryTest extends TestCase {
         $this->assertSame("Symfony", $found->name);
     }
 
-    public function testDeletePackageReturnsTrueWhenDeleted(): void
+    public function testDeletePackageReturnsPackageWhenDeleted(): void
     {
         $package = $this->createTestPackage();
         $created = $this->repository->createPackage($package);
-        $isDeleted = $this->repository->deletePackage($created->id);
-        $this->assertTrue($isDeleted);
+        $result = $this->repository->deletePackage($created->id);
+        $this->assertSame($package->name, $result->name);
+        $this->assertNull($this->repository->findById($created->id));
     }
 
-    public function testDeletePackageReturnsFalseWhenMissing(): void {
+    public function testDeletePackageReturnsNullWhenMissing(): void {
         $package = $this->createTestPackage();
         $created = $this->repository->createPackage($package);
-        $isDeleted = $this->repository->deletePackage($created->id-1);
-        $this->assertFalse($isDeleted);
+        $result = $this->repository->deletePackage($created->id-1);
+        $this->assertNull($result);
     }
 
 //    *************** HELPER FUNCTIONS ***************

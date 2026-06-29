@@ -61,7 +61,7 @@ class Router {
                 $id = (int)$matches['id'];
                 // later do not forget to http_response_code(204);
                 //echo json_encode($this->controller->deletePackage($id));
-                if ($this->controller->deletePackage($id)) {
+                if ($this->controller->deletePackage($id) === null) {
                     http_response_code(204);
                     return;
                 }
