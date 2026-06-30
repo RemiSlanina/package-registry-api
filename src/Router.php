@@ -62,10 +62,10 @@ class Router {
                 // later do not forget to http_response_code(204);
                 //echo json_encode($this->controller->deletePackage($id));
                 if ($this->controller->deletePackage($id) === null) {
-                    http_response_code(204);
+                    http_response_code(404);
                     return;
                 }
-                http_response_code(404);
+                http_response_code(204);
                 break;
             default:
                 http_response_code(404);

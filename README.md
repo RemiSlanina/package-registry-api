@@ -85,7 +85,7 @@ curl http://localhost:8000/packages/15
 Delete: 
 
 ```
-curl -X DELETE http://localhost:8000/packages/9
+curl -iX DELETE http://localhost:8000/packages/17
 ```
 
 Create:
