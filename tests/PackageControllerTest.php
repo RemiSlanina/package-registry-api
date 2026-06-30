@@ -70,6 +70,7 @@ class PackageControllerTest extends TestCase {
         $this->repository
             ->expects($this->once())
             ->method('updatePackage')
+            ->with($package)
             ->willReturn($package);
         $result = $this->controller->updatePackage($package);
         $this->assertSame($package, $result);
@@ -95,6 +96,41 @@ class PackageControllerTest extends TestCase {
             ->willReturn(null);
         $result = $this->controller->deletePackage(999);
         $this->assertNull($result);
+    }
+
+    public function testGetPackageReturnsNullWhenRepositoryReturnsNull(): void {
+        $this->repository
+            ->expects($this->once())
+            ->method('findById')
+            ->with(999)
+            ->willReturn(null);
+        $this->assertNull($this->controller->getPackage(999));
+    }
+
+    public function testCreatePackageForwardsRepositoryException(): void {
+        $package = $this->createTestPackage();
+        $this->repository
+            ->expects($this->once())
+            ->method('createPackage')
+            ->with($package)
+            ->willThrowException(
+                new RuntimeException('Something went wrong')
+            );
+        $this->expectException(RuntimeException::class);
+        $this->controller->createPackage($package);
+    }
+
+    public function testUpdatePackageForwardsRepositoryException(): void {
+        $package = $this->createTestPackage();
+        $this->repository
+            ->expects($this->once())
+            ->method('updatePackage')
+            ->with($package)
+            ->willThrowException(
+                new RuntimeException('Something went wrong')
+            );
+        $this->expectException(RuntimeException::class);
+        $this->controller->updatePackage($package);
     }
 
     //    *************** HELPER FUNCTIONS ***************
