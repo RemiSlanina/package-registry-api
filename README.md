@@ -10,6 +10,7 @@ A small REST API written in PHP for managing software package metadata.
 - Router
 - Controller layer
 - Repository pattern 
+- PHPUnit
 
 ## Why this project?
 
@@ -42,6 +43,8 @@ SQLite
 ## TODO
 
 - Return Response objects instead of echoing in Router
+- Current router tests focus on GET/DELETE routes. POST and PUT currently read 
+  directly from php://input, which will be refactored alongside a future Request/Response abstraction.
 - Better exception hierarchy
 - Router could be table-driven
 - Add OpenAPI/Swagger
@@ -177,7 +180,11 @@ To run one test method:
 ```bash
 vendor/bin/phpunit --filter testCreatePackageAssignId
 ```
+### Test coverage
 
+- Repository unit tests
+- Controller unit tests using PHPUnit mocks
+- Router tests covering GET, DELETE, and unknown routes
 
 ## Project structure
 

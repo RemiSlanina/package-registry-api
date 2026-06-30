@@ -5,7 +5,9 @@ use PHPUnit\Framework\TestCase;
 use App\Router;
 use App\Package;
 use App\PackageController;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
+#[AllowMockObjectsWithoutExpectations] # the test testHandleUnknownRoute does not use a controller mockup
 #[CoversClass(Router::class)]
 class RouterTest extends TestCase {
     private Router $router;
@@ -85,7 +87,61 @@ class RouterTest extends TestCase {
         $this->assertSame('', $output);
         $this->assertSame(404, http_response_code());
     }
+    public function testHandleDeleteSuccess(): void {
+        $id = 1;
+        $package = $this->createTestPackage($id);
+        $this->controller
+            ->expects($this->once())
+            ->method('deletePackage')
+            ->with($id)
+            ->willReturn($package);
 
+        ob_start();
+        $this->router->handle(
+            'DELETE', '/packages/' . $id
+        );
+        $output = ob_get_clean();
+        $this->assertSame('', $output);
+        $this->assertSame(204, http_response_code());
+    }
+
+    public function testHandleDeleteFail(): void {
+        $id = 999;
+        $this->controller
+            ->expects($this->once())
+            ->method('deletePackage')
+            ->with($id)
+            ->willReturn(null);
+        ob_start();
+        $this->router->handle(
+            'DELETE', '/packages/' . $id
+        );
+        $output = ob_get_clean();
+        $this->assertSame('', $output);
+        $this->assertSame(404, http_response_code());
+    }
+    public function testHandleUnknownRoute(): void {
+        // testHandleUnknownRoute() does not verify controller interactions.
+        // use #[AllowMockObjectsWithoutExpectations]
+        ob_start();
+        $this->router->handle(
+            'PATCH',
+            '/bananas'
+        );
+        $output = ob_get_clean();
+        $this->assertSame(404, http_response_code());
+        $this->assertJsonStringEqualsJsonString(
+            json_encode([
+                "error" => "Route not found",
+            ]),
+            $output
+        );
+    }
+
+// Router tests for POST and PUT are postponed.
+// The current implementation reads directly from php://input,
+// which makes unit testing cumbersome. Refactor the router
+// to separate request parsing from routing first.
 
 //    *************** HELPER FUNCTIONS ***************
     private function createTestPackage(?int $id = null): Package {
