@@ -16,6 +16,19 @@ A small REST API written in PHP for managing software package metadata.
 
 This project was built as a learning exercise to practice object-oriented PHP, HTTP request handling, repository-based architecture, SQLite, and automated testing.
 
+## Project Structure
+
+```text
+.
+├── src/          # PHP domain and application code
+├── public/       # API entry point
+├── tests/        # PHPUnit tests
+├── data/         # SQLite database
+├── frontend/     # React + Vite client
+└── dev-notes/    # Development notes
+```
+
+
 ## HTTP status codes
 
 ```text
