@@ -62,19 +62,53 @@ SQLite
 - Router could be table-driven
 - Add OpenAPI/Swagger
 
-## Running locally
+## Database setup
 
-Install dependencies
+Create the SQLite database from the provided schema and sample data.
+
+```bash
+sqlite3 data/packages.db < data/schema.sql
+sqlite3 data/packages.db < data/seed.sql
+```
+
+The generated `packages.db` file is ignored by Git and can be recreated at any time.
+
+## Running the PHP API
+
+Install PHP dependencies:
 
 ```bash
 composer install
 ```
 
-Start the development server
+Start the development server:
 
 ```bash
 php -S localhost:8000 -t public
 ```
+
+## React frontend
+
+Run
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The frontend will be available at:
+
+```text
+http://localhost:5173
+```
+
+## Requirements
+
+- PHP 8.3+
+- Composer 2
+- Node.js 24 LTS (or newer)
+- SQLite 3
 
 ### Use Browser
 Open
