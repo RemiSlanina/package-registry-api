@@ -10,7 +10,8 @@ dev-notes/
 # Database
 # Replace tracked SQLite DB with schema/seed before Docker.
 # Then exclude:
-#/data/packages.db
+/data/packages.db
+/data/packages.backup.db
 
 # Ignore coverage/
 coverage/
