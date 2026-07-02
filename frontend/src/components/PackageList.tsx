@@ -11,8 +11,8 @@ export default function PackageList() {
   }, []);
 
   async function loadPackages() {
+    // TODO: Handle loading errors.
     const data = await fetchPackages();
-    console.log("data: ", data);
     setPackages(data);
   }
 

@@ -1,9 +1,7 @@
 export async function fetchPackages() {
-  console.log("Fetching:", "http://localhost:8000/packages");
   const response = await fetch("http://localhost:8000/packages");
 
   if (!response.ok) {
-    console.log("Error loading packages");
     throw new Error("Couldn't load packages");
   }
   return response.json();

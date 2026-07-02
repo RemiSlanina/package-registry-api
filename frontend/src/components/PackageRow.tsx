@@ -11,20 +11,26 @@ export default function PackageRow({ pkg }: Props) {
   return (
     <li>
       <p>
-        <strong className="title"> {pkg.name}</strong>
+        <strong className={styles.title}> {pkg.name}</strong>
       </p>
-
-      <p>{pkg.description}</p>
       <div className={styles.details}>
-        <div>{pkg.programmingLanguage}</div>
+        <hr />
+        <p>{pkg.description}</p>
+        <div>Language: {pkg.programmingLanguage}</div>
         {pkg.repositoryUrl ? (
-          <a href={pkg.repositoryUrl} target="_blank" rel="noopener noreferrer">
-            <RepositoryLink url={pkg.repositoryUrl} />
-          </a>
+          <p>
+            <a
+              href={pkg.repositoryUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <RepositoryLink url={pkg.repositoryUrl} />
+            </a>
+          </p>
         ) : (
           <p>No URL found.</p>
         )}
-        <div>{pkg.license}</div>
+        <div>License: {pkg.license}</div>
       </div>
     </li>
   );

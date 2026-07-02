@@ -13,7 +13,7 @@ const providers = [
   { domain: "github.com", icon: FaGithub, label: "GitHub" },
   { domain: "gitlab.com", icon: FaGitlab, label: "GitLab" },
   { domain: "codeberg.org", icon: FaCodeBranch, label: "Codeberg" },
-  { domain: "bitbucket.org", icon: FaBitbucket, label: "BitBucket" },
+  { domain: "bitbucket.org", icon: FaBitbucket, label: "Bitbucket" },
 ];
 export default function RepositoryLink({ url }: Props) {
   const provider = providers.find((p) => url.includes(p.domain));
