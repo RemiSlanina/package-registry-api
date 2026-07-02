@@ -1,0 +1,36 @@
+body {
+  justify-content: center;
+}
+.title {
+  text-align: center;
+  font-size: larger;
+}
+.details {
+  font-size: "smaller";
+}
+ul {
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  justify-content: space-evenly;
+  gap: 0.6rem;
+  width: 80vw;
+}
+li {
+  margin: 1.6rem;
+  padding: 0.8rem;
+  border: solid var(--border) 3px;
+  border-radius: 20px;
+  background-color: var(--code-bg);
+}
+
+.button-icon {
+  height: 18px;
+  width: 18px;
+}
+
+a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
