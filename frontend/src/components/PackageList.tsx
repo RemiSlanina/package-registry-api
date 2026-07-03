@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchPackages } from "../api/packages";
+import { deletePackage, fetchPackages } from "../api/packages";
 import type { Package } from "../models/Package";
 import PackageRow from "./PackageRow";
 
@@ -16,6 +16,18 @@ export default function PackageList() {
     setPackages(data);
   }
 
+  async function handleDelete(id: number) {
+    try {
+      await deletePackage(id);
+
+      setPackages(
+        (previous) => previous?.filter((pkg) => pkg.id !== id) ?? null,
+      );
+    } catch (e) {
+      console.log("Failed deletion attempt: ", e);
+    }
+  }
+
   if (packages === null) {
     return <p>Loading packages... ¯\_(ツ)_/¯ </p>;
   }
@@ -27,7 +39,7 @@ export default function PackageList() {
   return (
     <ul>
       {packages.map((pkg) => (
-        <PackageRow key={pkg.id} pkg={pkg} />
+        <PackageRow key={pkg.id} pkg={pkg} onDelete={handleDelete} />
       ))}
     </ul>
   );

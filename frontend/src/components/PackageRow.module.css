@@ -40,3 +40,22 @@ a {
   align-items: center;
   gap: 0.25rem;
 }
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.header p {
+  display: block;
+}
+.header button {
+  display: block;
+}
+.header .actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: space-evenly;
+}
