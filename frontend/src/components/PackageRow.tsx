@@ -26,7 +26,12 @@ export default function PackageRow({ pkg, onDelete, onUpdate }: Props) {
     <>
       {isEditing ? (
         <li>
-          <PackageForm pkg={pkg} onCancel={onCancel} onSubmit={onSubmit} />
+          <PackageForm
+            pkg={pkg}
+            onCancel={onCancel}
+            onSubmit={onSubmit}
+            title={"Edit"}
+          />
         </li>
       ) : (
         <li>

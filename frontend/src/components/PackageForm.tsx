@@ -6,9 +6,10 @@ type Props = {
   pkg: Package;
   onSubmit: (pkg: Package) => void;
   onCancel: () => void;
+  title: string;
 };
 
-export default function PackageForm({ pkg, onSubmit, onCancel }: Props) {
+export default function PackageForm({ pkg, onSubmit, onCancel, title }: Props) {
   const [name, setName] = useState<string>(pkg.name);
   const [description, setDescription] = useState<string>(pkg.description);
   const [programmingLanguage, setProgrammingLanguage] = useState<string>(
@@ -18,6 +19,8 @@ export default function PackageForm({ pkg, onSubmit, onCancel }: Props) {
   const [license, setLicense] = useState<string>(pkg.license);
   return (
     <>
+      <strong className={styles.header}>{title} Package</strong>
+      <hr />
       <div className={styles.formgroup}>
         <label htmlFor="name" aria-label="Package name">
           Name{" "}
