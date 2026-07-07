@@ -1,3 +1,5 @@
+import type { Package } from "../models/Package";
+
 export async function fetchPackages() {
   const response = await fetch("http://localhost:8000/packages");
 
@@ -19,4 +21,17 @@ export async function deletePackage(id: number) {
   }
 
   // console.log("response: ", response);
+}
+
+export async function updatePackage(p: Package) {
+  const response = await fetch(`http://localhost:8000/packages/${p.id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(p),
+  });
+  // TODO : where and when to update react?
+
+  if (!response.ok) {
+    throw new Error("Could not update package.");
+  }
 }

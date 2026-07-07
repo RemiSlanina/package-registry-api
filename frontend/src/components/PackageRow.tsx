@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Package } from "../models/Package";
 import styles from "./PackageRow.module.css";
 import RepositoryLink from "./RepositoryLink";
@@ -5,18 +6,23 @@ import RepositoryLink from "./RepositoryLink";
 type Props = {
   pkg: Package;
   onDelete: (id: number) => void;
+  onUpdate: (pkg: Package) => void;
 };
 
 // destructuring Props
-export default function PackageRow({ pkg, onDelete }: Props) {
+export default function PackageRow({ pkg, onDelete, onUpdate }: Props) {
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   return (
     <li>
+      {isEditing && <p>Editing...</p>}
       <div className={styles.header}>
         <p>
           <strong className={styles.title}> {pkg.name}</strong>
         </p>{" "}
         <div className={styles.actions}>
-          <button>Edit</button>
+          <button type="button" onClick={() => setIsEditing(true)}>
+            Edit
+          </button>
           <button type="button" onClick={() => onDelete(pkg.id)}>
             Delete
           </button>
