@@ -59,3 +59,7 @@ a {
   gap: 0.5rem;
   justify-content: space-evenly;
 }
+
+label {
+  font-size: smaller;
+}

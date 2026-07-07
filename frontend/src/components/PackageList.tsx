@@ -32,11 +32,12 @@ export default function PackageList() {
   async function handleUpdate(pkgToUpdate: Package): Promise<void> {
     // first, give the user the chance to update the package:
 
-    console.log(JSON.stringify(pkgToUpdate, null, 2));
-    const updatedPacked = {
-      ...pkgToUpdate,
-      name: Math.random().toString(),
-    };
+    //console.log(JSON.stringify(pkgToUpdate, null, 2));
+    // const updatedPacked = {
+    //   ...pkgToUpdate,
+    //   name: Math.random().toString(),
+    // };
+    const updatedPacked = { ...pkgToUpdate };
     // TODO
     try {
       await updatePackage(updatedPacked);
