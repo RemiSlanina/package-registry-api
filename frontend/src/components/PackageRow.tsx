@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Package } from "../models/Package";
+import PackageForm from "./PackageForm";
 import styles from "./PackageRow.module.css";
 import RepositoryLink from "./RepositoryLink";
 
@@ -12,63 +13,20 @@ type Props = {
 // destructuring Props
 export default function PackageRow({ pkg, onDelete, onUpdate }: Props) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [name, setName] = useState<string>(pkg.name);
-  const [description, setDescription] = useState<string>(pkg.description);
+
+  function onSubmit(pkg: Package) {
+    // checking args?
+    onUpdate(pkg);
+    setIsEditing(false);
+  }
+  function onCancel() {
+    setIsEditing(false);
+  }
   return (
     <>
       {isEditing ? (
         <li>
-          <label
-            htmlFor="name"
-            aria-label="Package name"
-            aria-placeholder={name}
-          >
-            Name{" "}
-          </label>
-          <input
-            type="text"
-            name="name"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-          />
-          <label
-            htmlFor="description"
-            aria-label="Package description"
-            aria-placeholder={description}
-          >
-            <br />
-            Description{" "}
-          </label>
-          <input
-            type="text"
-            name="description"
-            value={description}
-            onChange={(event) => setDescription(event.target.value)}
-          />
-          <br />
-          <button
-            type="button"
-            onClick={() => {
-              onUpdate({
-                ...pkg,
-                name: name,
-                description: description,
-              });
-              setIsEditing(false);
-            }}
-          >
-            Save
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setName(pkg.name);
-              setDescription(pkg.description);
-              setIsEditing(false);
-            }}
-          >
-            Cancel
-          </button>
+          <PackageForm pkg={pkg} onCancel={onCancel} onSubmit={onSubmit} />
         </li>
       ) : (
         <li>
@@ -89,7 +47,9 @@ export default function PackageRow({ pkg, onDelete, onUpdate }: Props) {
             <hr />
             <p>{pkg.description}</p>
 
-            <div>Language: {pkg.programmingLanguage}</div>
+            <div>
+              <p>Language: {pkg.programmingLanguage}</p>
+            </div>
             {pkg.repositoryUrl ? (
               <p>
                 <a
@@ -103,7 +63,9 @@ export default function PackageRow({ pkg, onDelete, onUpdate }: Props) {
             ) : (
               <p>No URL found.</p>
             )}
-            <div>License: {pkg.license}</div>
+            <div>
+              <p>License: {pkg.license}</p>
+            </div>
           </div>
         </li>
       )}
