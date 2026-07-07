@@ -9,8 +9,12 @@ A small REST API written in PHP for managing software package metadata.
 - SQLite database
 - Router
 - Controller layer
-- Repository pattern 
+- Repository pattern
 - PHPUnit
+
+## Screenshot
+
+![Package Registry frontend](docs/images/package-api-frontend.png)
 
 ## Why this project?
 
@@ -27,7 +31,6 @@ This project was built as a learning exercise to practice object-oriented PHP, H
 ├── frontend/     # React + Vite client
 └── dev-notes/    # Development notes
 ```
-
 
 ## HTTP status codes
 
@@ -56,7 +59,7 @@ SQLite
 ## TODO
 
 - Return Response objects instead of echoing in Router
-- Current router tests focus on GET/DELETE routes. POST and PUT currently read 
+- Current router tests focus on GET/DELETE routes. POST and PUT currently read
   directly from php://input, which will be refactored alongside a future Request/Response abstraction.
 - Better exception hierarchy
 - Router could be table-driven
@@ -111,28 +114,32 @@ http://localhost:5173
 - SQLite 3
 
 ### Use Browser
+
 Open
 
 ```
 http://localhost:8000/packages
 ```
+
 or
 
 http://localhost:8000/packages/15
 
-### Use curl 
+### Use curl
 
-Read: 
+Read:
 
 ```
 curl http://localhost:8000/packages
 ```
-or 
+
+or
+
 ```
 curl http://localhost:8000/packages/15
 ```
 
-Delete: 
+Delete:
 
 ```
 curl -iX DELETE http://localhost:8000/packages/17
@@ -170,18 +177,18 @@ curl \
   http://localhost:8000/packages/15
 ```
 
-Curl notes: 
+Curl notes:
 
 ```bash
 curl -i # ... Show the HTTP response headers.
 
-curl -v # ... Verbose. 
+curl -v # ... Verbose.
 
-curl -X # ... Manually choose the HTTP method, instead of defaulting to GET. 
+curl -X # ... Manually choose the HTTP method, instead of defaulting to GET.
 
 curl -H # ... Add an HTTP header. like curl \ -H "Content-Type: application/json" ("I'm sending JSON")
 
-curl -d # ... The request body ("data") for input. 
+curl -d # ... The request body ("data") for input.
 # i.e.
 curl \
     -X POST \
@@ -196,7 +203,6 @@ curl \
     http://localhost:8000/packages
 ```
 
-
 ## Tests
 
 Using phpunit
@@ -206,27 +212,37 @@ composer require --dev phpunit/phpunit
 ```
 
 Initialize it with:
+
 ```bash
 vendor/bin/phpunit --generate-configuration
-``` 
+```
+
 to create phpunit.xml.
 
 Run tests with:
+
 ```bash
 vendor/bin/phpunit
 ```
+
 or
+
 ```bash
 vendor/bin/phpunit tests
 ```
+
 To run one file:
+
 ```bash
 vendor/bin/phpunit tests/PackageRepositoryTest.php
 ```
+
 To run one test method:
+
 ```bash
 vendor/bin/phpunit --filter testCreatePackageAssignId
 ```
+
 ### Test coverage
 
 - Repository unit tests
@@ -241,7 +257,7 @@ public/
 
 src/                         # Core logic
     Package.php              # Model
-    Router.php               # Routing logic  
+    Router.php               # Routing logic
     PackageController.php    # Handles HTTP requests
     PackageRepository.php    # Database operations
 
@@ -264,7 +280,6 @@ data/                        # SQLite database
 
 Example response:
 
-
 ### GET /packages
 
 ```json
@@ -274,7 +289,7 @@ Example response:
     ...
   }
 ]
-````
+```
 
 ### GET /packages/1
 
