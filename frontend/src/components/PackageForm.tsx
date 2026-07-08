@@ -1,15 +1,20 @@
 import { useState } from "react";
-import type { Package } from "../models/Package";
+import type { NewPackage, Package } from "../models/Package";
 import styles from "./PackageForm.module.css";
 
-type Props = {
-  pkg: Package;
-  onSubmit: (pkg: Package) => void;
+type Props<T extends Package | NewPackage> = {
+  pkg: T;
+  onSubmit: (pkg: T) => void;
   onCancel: () => void;
   title: string;
 };
 
-export default function PackageForm({ pkg, onSubmit, onCancel, title }: Props) {
+export default function PackageForm<T extends Package | NewPackage>({
+  pkg,
+  onSubmit,
+  onCancel,
+  title,
+}: Props<T>) {
   const [name, setName] = useState<string>(pkg.name);
   const [description, setDescription] = useState<string>(pkg.description);
   const [programmingLanguage, setProgrammingLanguage] = useState<string>(
@@ -19,7 +24,13 @@ export default function PackageForm({ pkg, onSubmit, onCancel, title }: Props) {
   const [license, setLicense] = useState<string>(pkg.license);
   return (
     <>
-      <strong className={styles.header}>{title} Package</strong>
+      <strong
+        className={`${styles.header} ${
+          title === "Create" ? styles.center : ""
+        }`}
+      >
+        {title} Package
+      </strong>
       <hr />
       <div className={styles.formgroup}>
         <label htmlFor="name" aria-label="Package name">
@@ -83,7 +94,7 @@ export default function PackageForm({ pkg, onSubmit, onCancel, title }: Props) {
                 programmingLanguage,
                 repositoryUrl,
                 license,
-              });
+              } as T);
             }}
           >
             Save

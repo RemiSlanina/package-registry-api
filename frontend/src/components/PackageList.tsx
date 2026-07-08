@@ -1,10 +1,18 @@
 import { useEffect, useState } from "react";
-import { deletePackage, fetchPackages, updatePackage } from "../api/packages";
-import type { Package } from "../models/Package";
+import {
+  createPackage,
+  deletePackage,
+  fetchPackages,
+  updatePackage,
+} from "../api/packages";
+import type { NewPackage, Package } from "../models/Package";
+import PackageForm from "./PackageForm";
+import styles from "./PackageList.module.css";
 import PackageRow from "./PackageRow";
 
 export default function PackageList() {
   const [packages, setPackages] = useState<Package[] | null>(null);
+  const [isCreating, setIsCreating] = useState<boolean>(false);
 
   useEffect(() => {
     loadPackages();
@@ -16,6 +24,32 @@ export default function PackageList() {
     setPackages(data);
   }
 
+  const emptyPkg = {
+    name: "name",
+    description: "description",
+    programmingLanguage: "programming language",
+    repositoryUrl: "repository url",
+    license: "license",
+  };
+
+  function onSubmit(pkg: NewPackage) {
+    handleCreate(pkg);
+  }
+  function onCancel() {
+    setIsCreating(false);
+  }
+
+  async function handleCreate(pkgToCreate: NewPackage): Promise<void> {
+    //
+    try {
+      const createdPackage = await createPackage(pkgToCreate);
+      setPackages((previous) => [...(previous ?? []), createdPackage]);
+      setIsCreating(false);
+    } catch (e) {
+      console.log("Failed to create package: ", e);
+    }
+  }
+
   async function handleDelete(id: number): Promise<void> {
     try {
       await deletePackage(id);
@@ -25,7 +59,7 @@ export default function PackageList() {
       );
     } catch (e) {
       // TODO show banner
-      console.log("Failed deletion attempt: ", e);
+      console.log("Failed to delete package: ", e);
     }
   }
 
@@ -64,15 +98,38 @@ export default function PackageList() {
   }
 
   return (
-    <ul>
-      {packages.map((pkg) => (
-        <PackageRow
-          key={pkg.id}
-          pkg={pkg}
-          onUpdate={handleUpdate}
-          onDelete={handleDelete}
+    <>
+      {isCreating ? (
+        <PackageForm
+          pkg={emptyPkg}
+          onCancel={onCancel}
+          onSubmit={onSubmit}
+          title={"Create"}
         />
-      ))}
-    </ul>
+      ) : (
+        <>
+          <div className={styles.actions}>
+            <button
+              role="button"
+              onClick={() => {
+                setIsCreating(true);
+              }}
+            >
+              Create Package
+            </button>
+          </div>
+          <ul>
+            {packages.map((pkg) => (
+              <PackageRow
+                key={pkg.id}
+                pkg={pkg}
+                onUpdate={handleUpdate}
+                onDelete={handleDelete}
+              />
+            ))}
+          </ul>{" "}
+        </>
+      )}
+    </>
   );
 }

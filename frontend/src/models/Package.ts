@@ -6,3 +6,5 @@ export interface Package {
   repositoryUrl: string;
   license: string;
 }
+
+export type NewPackage = Omit<Package, "id">;

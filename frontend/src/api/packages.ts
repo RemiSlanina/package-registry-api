@@ -1,4 +1,4 @@
-import type { Package } from "../models/Package";
+import type { NewPackage, Package } from "../models/Package";
 
 export async function fetchPackages() {
   const response = await fetch("http://localhost:8000/packages");
@@ -29,9 +29,21 @@ export async function updatePackage(p: Package) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(p),
   });
-  // TODO : where and when to update react?
 
   if (!response.ok) {
     throw new Error("Could not update package.");
   }
+}
+
+export async function createPackage(p: NewPackage) {
+  const response = await fetch("http://localhost:8000/packages", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(p),
+  });
+
+  if (!response.ok) {
+    throw new Error("Could not create package.");
+  }
+  return response.json();
 }

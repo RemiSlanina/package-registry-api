@@ -30,6 +30,9 @@ export default function PackageRow({ pkg, onDelete, onUpdate }: Props) {
             pkg={pkg}
             onCancel={onCancel}
             onSubmit={onSubmit}
+            // onSubmit={(pkg) => {
+            //   onSubmit(pkg as Package);
+            // }}
             title={"Edit"}
           />
         </li>
