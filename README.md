@@ -58,15 +58,6 @@ Repository
 SQLite
 ```
 
-## TODO
-
-- Return Response objects instead of echoing in Router
-- Current router tests focus on GET/DELETE routes. POST and PUT currently read
-  directly from php://input, which will be refactored alongside a future Request/Response abstraction.
-- Better exception hierarchy
-- Router could be table-driven
-- Add OpenAPI/Swagger
-
 ## Database setup
 
 Create the SQLite database from the provided schema and sample data.
@@ -267,17 +258,6 @@ data/                        # SQLite database
     packages.db
 ```
 
-## Roadmap
-
-- [x] GET /packages
-- [x] GET /packages/{id}
-- [x] POST /packages
-- [x] PUT /packages/{id}
-- [x] DELETE /packages/{id}
-- [x] PHPUnit tests
-- [ ] Validation
-- [ ] Small Frontend
-
 ## Example
 
 Example response:
@@ -288,6 +268,10 @@ Example response:
 [
   {
     "id": 1,
+    ...
+  },
+    {
+    "id": 2,
     ...
   }
 ]
