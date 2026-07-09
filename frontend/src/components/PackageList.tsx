@@ -12,9 +12,10 @@ import styles from "./PackageList.module.css";
 import PackageRow from "./PackageRow";
 
 export default function PackageList() {
-  const [packages, setPackages] = useState<Package[] | null>(null);
+  const [packages, setPackages] = useState<Package[]>([]);
   const [isCreating, setIsCreating] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     loadPackages();
@@ -22,12 +23,15 @@ export default function PackageList() {
 
   async function loadPackages() {
     try {
+      setIsLoading(true);
       setError(null);
       const data = await fetchPackages();
       setPackages(data);
     } catch (e) {
       console.error("Error loading Packages: ", e);
       setError("Could not load packages");
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -63,9 +67,7 @@ export default function PackageList() {
       setError(null);
       await deletePackage(id);
 
-      setPackages(
-        (previous) => previous?.filter((pkg) => pkg.id !== id) ?? null,
-      );
+      setPackages((previous) => previous.filter((pkg) => pkg.id !== id));
     } catch (e) {
       console.log("Failed to delete package: ", e);
       setError("Failed to delete package");
@@ -78,10 +80,8 @@ export default function PackageList() {
       await updatePackage(pkgToUpdate);
 
       // replace the package with a given id
-      setPackages(
-        (previous) =>
-          previous?.map((p) => (p.id === pkgToUpdate.id ? pkgToUpdate : p)) ??
-          null,
+      setPackages((previous) =>
+        previous.map((p) => (p.id === pkgToUpdate.id ? pkgToUpdate : p)),
       );
     } catch (e) {
       console.log("Failed to update package: ", e);
@@ -89,16 +89,12 @@ export default function PackageList() {
     }
   }
 
-  if (packages === null) {
-    return <p>Loading packages... ¯\_(ツ)_/¯ </p>;
-  }
-
-  if (packages.length === 0) {
-    return <p>No packages found ¯\_(ツ)_/¯</p>;
-  }
-
   return (
     <>
+      {isLoading && <p>Loading packages... </p>}{" "}
+      {!isCreating && packages.length === 0 && (
+        <p className={styles.centered}>No packages found ¯\_(ツ)_/¯ </p>
+      )}
       {error && <ErrorMessage message={error} />}
       {isCreating ? (
         <PackageForm
