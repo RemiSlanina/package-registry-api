@@ -11,6 +11,7 @@ A small REST API written in PHP for managing software package metadata.
 - Controller layer
 - Repository pattern
 - PHPUnit
+- Frontend-tests use Vitest and React Testing Library.
 
 ## Screenshot
 
@@ -198,6 +199,8 @@ curl \
 
 ## Tests
 
+### Backend tests
+
 Using phpunit
 
 ```bash
@@ -235,6 +238,18 @@ To run one test method:
 ```bash
 vendor/bin/phpunit --filter testCreatePackageAssignId
 ```
+
+### Frontend tests
+
+Run with:
+
+´´´bash
+npm test
+´´´
+or:
+´´´bash
+npx vitest
+´´´
 
 ### Test coverage
 
