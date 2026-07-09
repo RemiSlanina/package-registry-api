@@ -32,11 +32,11 @@ export default function PackageList() {
   }
 
   const emptyPkg = {
-    name: "name",
-    description: "description",
-    programmingLanguage: "programming language",
-    repositoryUrl: "repository url",
-    license: "license",
+    name: "",
+    description: "",
+    programmingLanguage: "",
+    repositoryUrl: "",
+    license: "",
   };
 
   function onSubmit(pkg: NewPackage) {

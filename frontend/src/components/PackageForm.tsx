@@ -22,6 +22,19 @@ export default function PackageForm<T extends Package | NewPackage>({
   );
   const [repositoryUrl, setRepositoryUrl] = useState<string>(pkg.repositoryUrl);
   const [license, setLicense] = useState<string>(pkg.license);
+
+  function handleSubmit(event: React.FormEvent) {
+    event.preventDefault();
+    onSubmit({
+      ...pkg,
+      name,
+      description,
+      programmingLanguage,
+      repositoryUrl,
+      license,
+    } as T);
+  }
+
   return (
     <>
       <strong
@@ -32,11 +45,14 @@ export default function PackageForm<T extends Package | NewPackage>({
         {title} Package
       </strong>
       <hr />
-      <div className={styles.formgroup}>
+
+      <form onSubmit={handleSubmit}>
         <label htmlFor="name" aria-label="Package name">
           Name{" "}
         </label>
         <input
+          required
+          placeholder="name"
           type="text"
           name="name"
           value={name}
@@ -50,6 +66,8 @@ export default function PackageForm<T extends Package | NewPackage>({
           Description{" "}
         </label>
         <input
+          required
+          placeholder="description"
           type="text"
           name="description"
           value={description}
@@ -59,6 +77,7 @@ export default function PackageForm<T extends Package | NewPackage>({
           Language{" "}
         </label>
         <input
+          placeholder="JavaScript"
           type="text"
           name="programmingLanguage"
           value={programmingLanguage}
@@ -68,7 +87,9 @@ export default function PackageForm<T extends Package | NewPackage>({
           Repo{" "}
         </label>
         <input
-          type="text"
+          required
+          placeholder="https://www.example.org"
+          type="url"
           name="repositoryUrl"
           value={repositoryUrl}
           onChange={(event) => setRepositoryUrl(event.target.value)}
@@ -77,6 +98,8 @@ export default function PackageForm<T extends Package | NewPackage>({
           License{" "}
         </label>
         <input
+          required
+          placeholder="Apache License 2.0"
           type="text"
           name="license"
           value={license}
@@ -84,26 +107,12 @@ export default function PackageForm<T extends Package | NewPackage>({
         />
         <hr />
         <div className={styles.actions}>
-          <button
-            type="button"
-            onClick={() => {
-              onSubmit({
-                ...pkg,
-                name,
-                description,
-                programmingLanguage,
-                repositoryUrl,
-                license,
-              } as T);
-            }}
-          >
-            Save
-          </button>
+          <button type="submit">Save</button>
           <button type="button" onClick={() => onCancel()}>
             Cancel
           </button>
         </div>
-      </div>
+      </form>
     </>
   );
 }
