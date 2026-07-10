@@ -31,11 +31,6 @@ li p {
   margin-top: 0.7rem;
 }
 
-.button-icon {
-  height: 18px;
-  width: 18px;
-}
-
 a {
   display: inline-flex;
   align-items: center;
@@ -51,15 +46,23 @@ a {
 .header p {
   display: block;
 }
-.header button {
+button {
   display: block;
-  border-radius: 7px;
+  border-radius: 14px;
   margin-top: 0.1rem;
   min-width: 5rem;
 }
-.header .actions {
+.card {
   display: flex;
   flex-direction: column;
+}
+
+.content {
+  flex: 1;
+}
+.actions {
+  display: flex;
+  flex-direction: column-reverse;
   gap: 0.5rem;
   justify-content: space-evenly;
 }

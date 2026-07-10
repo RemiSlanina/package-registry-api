@@ -37,43 +37,46 @@ export default function PackageRow({ pkg, onDelete, onUpdate }: Props) {
           />
         </li>
       ) : (
-        <li>
-          <div className={styles.header}>
-            <p>
-              <strong className={styles.title}> {pkg.name}</strong>
-            </p>{" "}
-            <div className={styles.actions}>
-              <button type="button" onClick={() => setIsEditing(true)}>
-                Edit
-              </button>
-              <button type="button" onClick={() => onDelete(pkg.id)}>
-                Delete
-              </button>
-            </div>
-          </div>
-          <div className={styles.details}>
-            <hr />
-            <p>{pkg.description}</p>
-
-            <div>
-              <p>Language: {pkg.programmingLanguage}</p>
-            </div>
-            {pkg.repositoryUrl ? (
+        <li className={styles.card}>
+          <div className={styles.content}>
+            <div className={styles.header}>
               <p>
-                <a
-                  href={pkg.repositoryUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <RepositoryLink url={pkg.repositoryUrl} />
-                </a>
-              </p>
-            ) : (
-              <p>No URL found.</p>
-            )}
-            <div>
-              <p>License: {pkg.license}</p>
+                <strong className={styles.title}> {pkg.name}</strong>
+              </p>{" "}
             </div>
+            <div className={styles.details}>
+              <hr />
+              <p>{pkg.description}</p>
+
+              <div>
+                <p>Language: {pkg.programmingLanguage}</p>
+              </div>
+              {pkg.repositoryUrl ? (
+                <p>
+                  <a
+                    href={pkg.repositoryUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <RepositoryLink url={pkg.repositoryUrl} />
+                  </a>
+                </p>
+              ) : (
+                <p>No URL found.</p>
+              )}
+              <div>
+                <p>License: {pkg.license}</p>
+              </div>
+            </div>{" "}
+          </div>
+          <hr />
+          <div className={styles.actions}>
+            <button type="button" onClick={() => setIsEditing(true)}>
+              Edit
+            </button>
+            <button type="button" onClick={() => onDelete(pkg.id)}>
+              Delete
+            </button>
           </div>
         </li>
       )}

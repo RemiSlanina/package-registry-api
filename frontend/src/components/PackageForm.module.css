@@ -1,4 +1,4 @@
-form {
+.formGroup {
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
@@ -14,19 +14,47 @@ input {
 hr {
   opacity: 0.1;
 }
-.actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.6rem;
-  margin-top: 0.8rem;
-}
-.actions button {
-  border-radius: 7px;
-  margin-top: 0.1rem;
-  min-width: 5rem;
-}
+
 .center {
   display: block;
   text-align: center;
   align-items: center;
+}
+
+.title {
+  text-align: center;
+  font-size: larger;
+}
+
+.details hr {
+  border: 1px solid var(--border);
+  opacity: 0.5;
+  margin: 0.75rem 0 1.25rem 0;
+}
+
+a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.header p {
+  display: block;
+}
+.header button {
+  display: block;
+  border-radius: 7px;
+  margin-top: 0.1rem;
+  min-width: 5rem;
+}
+.actions {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 0.5rem;
 }
