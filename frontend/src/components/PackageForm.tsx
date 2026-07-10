@@ -56,54 +56,49 @@ export default function PackageForm<T extends Package | NewPackage>({
         <hr />
 
         <div className={styles.formGroup}>
-          <label htmlFor="name" aria-label="Package name">
-            Name{" "}
-          </label>
+          <label htmlFor="name">Name </label>
           <input
             required
+            id="name"
             placeholder="name"
             type="text"
             name="name"
             value={name}
             onChange={(event) => setName(event.target.value)}
           />
-          <label htmlFor="description" aria-label="Package description">
-            Description{" "}
-          </label>
+          <label htmlFor="description">Description </label>
           <input
             required
+            id="description"
             placeholder="description"
             type="text"
             name="description"
             value={description}
             onChange={(event) => setDescription(event.target.value)}
           />{" "}
-          <label htmlFor="programmingLanguage" aria-label="Package language">
-            Language{" "}
-          </label>
+          <label htmlFor="programmingLanguage">Language </label>
           <input
+            id="programmingLanguage"
             placeholder="JavaScript"
             type="text"
             name="programmingLanguage"
             value={programmingLanguage}
             onChange={(event) => setProgrammingLanguage(event.target.value)}
           />
-          <label htmlFor="repositoryUrl" aria-label="Package repo">
-            Repo{" "}
-          </label>
+          <label htmlFor="repositoryUrl">Repo </label>
           <input
             required
+            id="repositoryUrl"
             placeholder="https://www.example.org"
             type="url"
             name="repositoryUrl"
             value={repositoryUrl}
             onChange={(event) => setRepositoryUrl(event.target.value)}
           />
-          <label htmlFor="license" aria-label="Package license">
-            License{" "}
-          </label>
+          <label htmlFor="license">License </label>
           <input
             required
+            id="license"
             placeholder="Apache License 2.0"
             type="text"
             name="license"
